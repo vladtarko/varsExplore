@@ -16,12 +16,6 @@ devtools::install_github("vladtarko/varsExplore")
 qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_std_cs_jan18.dta")
 
 # create variable explorer in RStudio's View Pane
-devtools::install_github("vladtarko/varsExplore")
-```
-
-# Basic usage
-
-```r
 vars_explore(qog)
 ```
 
