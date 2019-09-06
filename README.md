@@ -46,7 +46,7 @@ qog_summary <- vars_explore(qog, silent = FALSE)
 
 This can be used to make summary statistics tables, e.g. for a paper.
 
-## Acknowledgements
+# Acknowledgements
 
 This was made possible by Reigo Hendrikson's `datatable2`:  <http://www.reigo.eu/2018/04/extending-dt-child-row-example/>
 
