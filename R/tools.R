@@ -18,7 +18,7 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
   names_x <- names(x)
   if (is.null(vars)) stop("'vars' must be specified!")
   pos <- match(vars, names_x)
-  if (any(map_chr(x[, pos], typeof) == "list"))
+  if (any(purrr::map_chr(x[, pos], typeof) == "list"))
     stop("list columns are not supported in datatable2()")
 
   pos <- pos[pos <= ncol(x)] + 1
