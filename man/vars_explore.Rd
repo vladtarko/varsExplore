@@ -44,9 +44,12 @@ a table of summary statistics.
 }
 \examples{
 
+\dontrun{
 qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
 vars_explore(qog)
+vars_explore(qog, minimal = TRUE)
 qog_summary <- vars_explore(qog, silent = FALSE)
-vars_explore(qog, silent = FALSE, values = TRUE, viewer = FALSE) \%>\% View()
+vars_explore(qog, silent = FALSE, viewer = FALSE) \%>\% View()
+}
 
 }

@@ -10,7 +10,7 @@ datatable2(x, vars = NULL, opts = NULL, font.size = "10pt",
 \arguments{
 \item{x}{A dataframe}
 
-\item{vars}{String vector. Variables you want to put in the details table, rather than
+\item{vars}{String vector. The variables you want to put in the details table, rather than
 keep in the main table.}
 
 \item{opts}{Additional options for DT::datatable.}
@@ -18,10 +18,12 @@ keep in the main table.}
 \item{font.size}{String. Default is "10pt".}
 
 \item{dom}{String. What DT::datatable elements to show. Default is 'fti'.}
+
+\item{...}{Additional parameters for DT::datatable.}
 }
 \value{
-
+A DT::datatable.
 }
 \description{
-Created by Reigo: <http://www.reigo.eu/2018/04/extending-dt-child-row-example/>
+Created by Reigo Hendrikson: <http://www.reigo.eu/2018/04/extending-dt-child-row-example/>
 }

@@ -11,7 +11,7 @@ Description: Creates a summary dataframe that can be used in RStudio similar to 
         This is useful particularly if you have a large dataset with a very large number
     of labelled variables with hard to remember names. Can also be used to generate
     a table of summary statistics.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Imports: 

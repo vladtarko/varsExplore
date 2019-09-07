@@ -11,7 +11,7 @@
 #' @param ...   Additional parameters for DT::datatable.
 #'
 #' @export
-#' @return
+#' @return A DT::datatable.
 #'
 datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'fti', ...) {
 
@@ -129,10 +129,13 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
 #' @importFrom magrittr "%>%"
 #' @examples
 #'
+#' \dontrun{
 #' qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
 #' vars_explore(qog)
+#' vars_explore(qog, minimal = TRUE)
 #' qog_summary <- vars_explore(qog, silent = FALSE)
 #' vars_explore(qog, silent = FALSE, viewer = FALSE) %>% View()
+#' }
 #'
 vars_explore <- function(df,
                          viewer = TRUE,
@@ -203,7 +206,7 @@ vars_explore <- function(df,
           #editable = TRUE,
           #extensions = 'Scroller',
           options = list(
-            initComplete = htmlwidgets::JS(
+            initComplete = DT::JS(
               "function(settings, json) {",
               paste0("$(this.api().table().header()).css({'font-size': '", font.size, "'});"),
               "}"),
