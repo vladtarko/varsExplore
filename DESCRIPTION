@@ -1,6 +1,6 @@
 Package: varsExplore
 Type: Package
-Title: Searchable variable explorer with labeled variables in RStudio's Viewer Pane.
+Title: Searchable Variable Explorer with Labeled Variables
 Version: 0.1.0
 Author: Vlad Tarko
 Maintainer: Vlad Tarko <vladtarko@gmail.com>
