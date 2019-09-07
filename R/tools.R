@@ -8,6 +8,7 @@
 #' @param font.size String. Default is "10pt".
 #' @param dom   String. What DT::datatable elements to show. Default is 'fti'.
 #' @param opts  Additional options for DT::datatable.
+#' @param ...   Additional parameters for DT::datatable.
 #'
 #' @export
 #' @return
@@ -28,7 +29,7 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
   opts <- c(
     opts,
     list(
-      initComplete = htmlwidgets::JS(
+      initComplete = DT::JS(
         "function(settings, json) {",
         paste0("$(this.api().table().header()).css({'font-size': '", font.size, "'});"),
         "}"),
@@ -131,7 +132,7 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
 #' qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
 #' vars_explore(qog)
 #' qog_summary <- vars_explore(qog, silent = FALSE)
-#' vars_explore(qog, silent = FALSE, values = TRUE, viewer = FALSE) %>% View()
+#' vars_explore(qog, silent = FALSE, viewer = FALSE) %>% View()
 #'
 vars_explore <- function(df,
                          viewer = TRUE,
@@ -158,7 +159,7 @@ vars_explore <- function(df,
 
   if (!minimal){
     summary_df <- summary_df %>%
-      mutate(
+      dplyr::mutate(
         Type        = purrr::map_chr(df, ~class(.x)),
         Mean        = purrr::map_dbl(df, ~round(mean(.x, na.rm = TRUE), digits)),
         Median      = purrr::map_dbl(df, ~round(median(.x, na.rm = TRUE), digits)),
@@ -219,7 +220,6 @@ vars_explore <- function(df,
             # scroller = TRUE
           ),
         ) %>%
-
         DT::formatStyle(columns = colnames(summary_df), fontSize = font.size) %>%
         DT::saveWidget(tempFileName)
 

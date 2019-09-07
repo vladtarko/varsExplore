@@ -51,7 +51,7 @@ data.frame(Description = sjlabelled::get_label(qog)) %>% DT::datatable()
 <div style = "width:50%; height:auto; margin: auto;">
 
 ```{r echo=FALSE}
-data.frame(Description = sjlabelled::get_label(qog)) %>% DT::datatable()
+data.frame(Description = purrr::map_chr(qog, ~attr(.x, "label"))) %>% DT::datatable()
 ```
 
 </div>

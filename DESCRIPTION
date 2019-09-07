@@ -21,7 +21,9 @@ Imports:
     tidyr,
     stringr,
     glue,
-    DT
+    DT,
+    rstudioapi,
+    rio
 RoxygenNote: 6.1.1
 Suggests: 
     knitr,
