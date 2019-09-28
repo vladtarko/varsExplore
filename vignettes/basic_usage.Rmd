@@ -70,7 +70,7 @@ vars_explore(qog)
 
 This will create a searchable variable explorer, and calculate summary statistics for each variable:
 
-![](vars_explore_large.gif)
+![](https://raw.githubusercontent.com/vladtarko/varsExplore/master/vignettes/vars_explore_large.gif)
 
 The table is searchable, and you can, furthermore, arrange it, say, based on which variable has least missing values. For instance, search for "GDP per capita" and see which variable provides most complete information.
 

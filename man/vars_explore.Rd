@@ -2,7 +2,7 @@
 % Please edit documentation in R/tools.R
 \name{vars_explore}
 \alias{vars_explore}
-\title{Searchable variable explorer with labeled variables}
+\title{Searchable variable explorer with labelled variables}
 \usage{
 vars_explore(df, viewer = TRUE, digits = 2, font.size = "10pt",
   value.labels.width = 500, silent = TRUE, minimal = FALSE)
@@ -44,12 +44,12 @@ a table of summary statistics.
 }
 \examples{
 
-\dontrun{
 qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
+\donttest{
 vars_explore(qog)
 vars_explore(qog, minimal = TRUE)
-qog_summary <- vars_explore(qog, silent = FALSE)
 vars_explore(qog, silent = FALSE, viewer = FALSE) \%>\% View()
 }
+qog_summary <- vars_explore(qog, silent = FALSE, viewer = FALSE)
 
 }

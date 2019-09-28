@@ -98,7 +98,7 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
 }
 
 
-#' Searchable variable explorer with labeled variables
+#' Searchable variable explorer with labelled variables
 #'
 #' Creates a summary dataframe that can be used in RStudio similar to the variable
 #' explorer in Stata, but which also includes the summary statistics. If `viewer`
@@ -129,13 +129,13 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
 #' @importFrom magrittr "%>%"
 #' @examples
 #'
-#' \dontrun{
 #' qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
+#' \donttest{
 #' vars_explore(qog)
 #' vars_explore(qog, minimal = TRUE)
-#' qog_summary <- vars_explore(qog, silent = FALSE)
 #' vars_explore(qog, silent = FALSE, viewer = FALSE) %>% View()
 #' }
+#' qog_summary <- vars_explore(qog, silent = FALSE, viewer = FALSE)
 #'
 vars_explore <- function(df,
                          viewer = TRUE,
