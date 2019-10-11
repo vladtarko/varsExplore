@@ -5,6 +5,14 @@ Searchable variable explorer with labeled variables in RStudio's Viewer Pane
 
 # Install
 
+From CRAN:
+
+```r
+install.packages("varsExplore")
+```
+
+Development version:
+
 ```r
 devtools::install_github("vladtarko/varsExplore")
 ```
