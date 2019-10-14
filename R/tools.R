@@ -156,7 +156,7 @@ vars_explore <- function(df,
   # build basic summary
   summary_df <- data.frame(
     Variable    = names(df),
-    Description = purrr::map_chr(df, ~attr(.x, "label")),
+    Description = purrr::map_chr(df, ~ifelse(!is.null(attr(.x, "label")), attr(.x, "label"), "")),
     Obs.        = purrr::map_dbl(df, ~sum(!is.na(.x))),
     Missing     = purrr::map_dbl(df, ~sum( is.na(.x))))
 
