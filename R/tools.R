@@ -164,9 +164,9 @@ vars_explore <- function(df,
     summary_df <- summary_df %>%
       dplyr::mutate(
         Type        = purrr::map_chr(df, ~class(.x)),
-        Mean        = purrr::map_dbl(df, ~round(mean(.x, na.rm = TRUE), digits)),
-        Median      = purrr::map_dbl(df, ~round(median(.x, na.rm = TRUE), digits)),
-        Std.Dev.    = purrr::map_dbl(df, ~round(sd(.x, na.rm = TRUE), digits)),
+        Mean        = purrr::map_dbl(df, ~round(as.numeric(mean(.x, na.rm = TRUE), digits))),
+        Median      = purrr::map_dbl(df, ~round(as.numeric(median(.x, na.rm = TRUE), digits))),
+        Std.Dev.    = purrr::map_dbl(df, ~round(as.numeric(sd(.x, na.rm = TRUE), digits))),
         Min         = purrr::map_chr(df, ~min(.x, na.rm = TRUE)),
         Max         = purrr::map_chr(df, ~max(.x, na.rm = TRUE))
       )
