@@ -4,8 +4,15 @@
 \alias{vars_explore}
 \title{Searchable variable explorer with labelled variables}
 \usage{
-vars_explore(df, viewer = TRUE, digits = 2, font.size = "10pt",
-  value.labels.width = 500, silent = TRUE, minimal = FALSE)
+vars_explore(
+  df,
+  viewer = TRUE,
+  digits = 2,
+  font.size = "10pt",
+  value.labels.width = 500,
+  silent = TRUE,
+  minimal = FALSE
+)
 }
 \arguments{
 \item{df}{A data frame.}
@@ -45,7 +52,8 @@ a table of summary statistics.
 \examples{
 
 qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
-\donttest{
+vars_explore(qog, silent = FALSE, viewer = FALSE)
+\dontrun{
 vars_explore(qog)
 vars_explore(qog, minimal = TRUE)
 vars_explore(qog, silent = FALSE, viewer = FALSE) \%>\% View()

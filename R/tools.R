@@ -97,6 +97,27 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
   )
 }
 
+#' Numeric x
+#'
+#' @param x A vector
+#'
+#' @return A vector of numbers with NAs removed, if `x` is numeric.
+#'         If `x` is non-numeric or 100% NAs, returns a single NA.
+#'
+#' @importFrom stats "na.omit"
+#'
+num_x <- function(x){
+
+  if(is.numeric(x)) {
+    y <- na.omit(x)
+    if(length(y) == 0) { y <- NA }
+  } else {
+    y <- NA
+  }
+
+  return(y)
+
+}
 
 #' Searchable variable explorer with labelled variables
 #'
@@ -130,7 +151,8 @@ datatable2 <- function(x, vars = NULL, opts = NULL, font.size = "10pt", dom = 'f
 #' @examples
 #'
 #' qog <- rio::import("http://www.qogdata.pol.gu.se/dataarchive/qog_bas_cs_jan18.dta")
-#' \donttest{
+#' vars_explore(qog, silent = FALSE, viewer = FALSE)
+#' \dontrun{
 #' vars_explore(qog)
 #' vars_explore(qog, minimal = TRUE)
 #' vars_explore(qog, silent = FALSE, viewer = FALSE) %>% View()
@@ -145,13 +167,15 @@ vars_explore <- function(df,
                          silent = TRUE,
                          minimal = FALSE) {
 
-  stats <- "mean, median, sd, min, max"
-  stats <- stats %>% stringr::str_replace("mean", "Mean")
-  stats <- stats %>% stringr::str_replace("median", "Median")
-  stats <- stats %>% stringr::str_replace("sd", "Std.Dev.")
-  stats <- stats %>% stringr::str_replace("min", "Min")
-  stats <- stats %>% stringr::str_replace("max", "Max")
-  stats <- stats %>% stringr::str_remove_all(" ") %>% stringr::str_split(",") %>% unlist()
+  stats <- "mean, median, sd, min, max" %>%
+    stringr::str_replace("mean", "Mean") %>%
+    stringr::str_replace("median", "Median") %>%
+    stringr::str_replace("sd", "Std.Dev.") %>%
+    stringr::str_replace("min", "Min") %>%
+    stringr::str_replace("max", "Max") %>%
+    stringr::str_remove_all(" ") %>%
+    stringr::str_split(",") %>%
+    unlist()
 
   # build basic summary
   summary_df <- data.frame(
@@ -164,32 +188,39 @@ vars_explore <- function(df,
     summary_df <- summary_df %>%
       dplyr::mutate(
         Type        = purrr::map_chr(df, ~class(.x)),
-        Mean        = purrr::map_dbl(df, ~round(as.numeric(mean(.x, na.rm = TRUE), digits))),
-        Median      = purrr::map_dbl(df, ~round(as.numeric(median(.x, na.rm = TRUE), digits))),
-        Std.Dev.    = purrr::map_dbl(df, ~round(as.numeric(sd(.x, na.rm = TRUE), digits))),
-        Min         = purrr::map_chr(df, ~min(.x, na.rm = TRUE)),
-        Max         = purrr::map_chr(df, ~max(.x, na.rm = TRUE))
+        Mean        = purrr::map_dbl(df, ~mean  (num_x(.x))),
+        Median      = purrr::map_dbl(df, ~median(num_x(.x))),
+        Std.Dev.    = purrr::map_dbl(df, ~sd    (num_x(.x))),
+        Min         = purrr::map_chr(df, ~min   (num_x(.x))),
+        Max         = purrr::map_chr(df, ~max   (num_x(.x)))
       )
-    summary_df$Min <- round(as.numeric(summary_df$Min), digits)
-    summary_df$Max <- round(as.numeric(summary_df$Max), digits)
+
+    # round numeric values
+    summary_df <- summary_df %>% dplyr::mutate_if(is.numeric, ~round(.x, digits))
 
     # get value labels
     value_labels <- df %>%
-      #sjlabelled::get_labels() %>%                                  # creates list of value labels
       purrr::map(~names(attr(.x, "labels"))) %>%                    # creates list of value labels
       purrr::map(~glue::glue_collapse(.x, sep = "; ")) %>%          # glues all labels of a variable
       purrr::map_df(~ifelse(length(.x) == 0, NA, .x)) %>%           # replaces empty labels with NA
       tidyr::gather(key = "Variable", value = "Value labels") %>%   # transpose to long format
       dplyr::mutate(`Value labels` = stringr::str_trunc(`Value labels`, value.labels.width))
 
-    # round numeric values
-    df <- df %>% dplyr::mutate_if(is.numeric, ~round(.x, digits))
-
+    # add value labels
     summary_df <- summary_df %>%
       dplyr::mutate(Values = purrr::map_chr(df,
-                      ~stringr::str_trunc(paste(unique(.x), collapse = ", "), value.labels.width))) %>%
+                    ~stringr::str_trunc(paste(unique(.x), collapse = ", "), value.labels.width))) %>%
       dplyr::full_join(value_labels, by = "Variable") %>%
-      dplyr::select(Variable, Description, Type, Obs., Missing, stats, Values, `Value labels`)
+      dplyr::select(Variable, Description, Type, Obs., Missing, stats, Values, `Value labels`) %>%
+
+      # fix possible encoding problems (e.g. special characters in country names)
+      # DT::datatable gives errors for non-UTF8 characters
+      dplyr::mutate(
+        Variable       = iconv(Variable),
+        Description    = iconv(Description),
+        Values         = iconv(Values),
+        `Value labels` = iconv(`Value labels`),
+      )
 
   }
 
@@ -241,5 +272,5 @@ vars_explore <- function(df,
   }
 
   # if silent = FALSE, return the summary dataframe
-  if (silent) { return("See the Viewer Pane") } else { return(summary_df) }
+  if (silent) { message("See the Viewer Pane"); return(NULL) } else { return(summary_df) }
 }

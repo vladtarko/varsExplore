@@ -4,8 +4,7 @@
 \alias{datatable2}
 \title{datatable2 - Datatable with child rows}
 \usage{
-datatable2(x, vars = NULL, opts = NULL, font.size = "10pt",
-  dom = "fti", ...)
+datatable2(x, vars = NULL, opts = NULL, font.size = "10pt", dom = "fti", ...)
 }
 \arguments{
 \item{x}{A dataframe}

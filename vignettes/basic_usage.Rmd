@@ -92,7 +92,7 @@ vdem_summary <- qog %>%
 knitr::kable(vdem_summary)
 ```
 
-You can also opt to use `View()` instead of the Viewer Pane, which works much faster than `DT::datatable()`, although, given how RStudio works, this makes it impossible to see both the variable explorer and your script at the same time.
+You can also opt to use `View()` instead of the Viewer Pane, which works much faster than `DT::datatable()`, although, given how RStudio works, this makes hard to see both the variable explorer and your script at the same time.
 
 ## Alternatives
 
@@ -101,9 +101,9 @@ The best alternative to `vars_explore` is the `vtable` package. The downsides of
 (1) it doesn't provide a searchable table in the Viewer Pane, and 
 (2) it puts all summary stats in a single text column. This makes it hard to sort based on, say, the number of missing values. 
 
-You can, however, use `vtable` to generate a dataframe that can be opened with `View()`, just like you can with `vars_explore(silent = FALSE, viewer = FALSE)`. Unfortunately, what makes `vtable` faster is precisly its limitations, as the most time consuming part is loading up the `DT::datatable`, rather than calculating anything. `vtable` works fast because it creates a simple HTML file, but that is not searchable in the Viewer Pane.
+You can, however, use `vtable` to generate a dataframe that can be opened with `View()`, just like you can with `vars_explore(silent = FALSE, viewer = FALSE)`. Unfortunately, what makes `vtable` faster is precisely its limitations, as the most time consuming part is loading up the `DT::datatable`, rather than calculating anything. `vtable` works fast because it creates a simple HTML file, but that is not searchable in the Viewer Pane.
 
-The other alternative is `sjPlot::view_df`, which provides summary stats in individual columns, but it is _very_ slow. Also, like `vtable`, it doesn't provide a searchable table in the Viewer Pane. 
+Another alternative is `sjPlot::view_df`, which provides summary stats in individual columns, but it is _very_ slow. Also, like `vtable`, it doesn't provide a searchable table in the Viewer Pane. 
 
 ## Acknowledgements
 
